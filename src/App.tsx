@@ -87,9 +87,55 @@ export default class App extends React.Component<any, State> {
     }
 
     private onButtonMoveUp(item: Item) {
+        const newList: Item[] = []
+        const palette = this.state.palette
+
+        // Skip when list is empty or item == first element
+        if (palette.items.length === 0) return
+        if (palette.items[0] === item) return
+
+        for (let i of palette.items) {
+            // if i != item, just add i to the list
+            // it i == item, add i before the last element
+            if (i === item) {
+                newList.splice(newList.length - 1, 0, i)
+            } else {
+                newList.push(i)
+            }
+        }
+
+        palette.items = newList
+        this.setState({palette})
     }
 
     private onButtonMoveDown(item: Item) {
+        const newList: Item[] = []
+        const palette = this.state.palette
+
+        // Skip when list is empty or item == last element
+        if (palette.items.length === 0) return
+        if (palette.items[palette.items.length - 1] === item) return
+
+        // This backup will hold the item which should be moved for the next position
+        let backup: Item | null = null
+
+        for (let i of palette.items) {
+            // if i != item, just add i to the list and add backup if not null
+            // it i == item, set backup to i and continue
+            if (i === item) {
+                backup = i
+            } else {
+                newList.push(i)
+
+                if (backup !== null) {
+                    newList.push(backup)
+                    backup = null
+                }
+            }
+        }
+
+        palette.items = newList
+        this.setState({palette})
     }
 
     private onButtonDelete(item: Item) {
