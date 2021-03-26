@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 1024 600" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <rect id="background" x="0" y="0" width="1024" height="600" style="fill:rgb(214,214,214);"/>
+    <path id="backshadow" d="M128,0L1024,0L1024,448L128,0Z" style="fill:rgb(128,128,128);"/>
+    <g id="boxes">
+        <g id="box2">
+            <path id="front" d="M374.597,337.688L232.052,266.416L232.052,123.87L374.597,195.143L374.597,337.688Z" style="fill:rgb(13,121,242);"/>
+            <path id="top" d="M232.052,123.87L338.961,70.416L481.506,141.688L374.597,195.143L232.052,123.87Z" style="fill:rgb(13,202,242);"/>
+            <path id="side" d="M481.506,141.688L374.597,195.143L374.597,337.688L481.506,284.234L481.506,141.688Z" style="fill:rgb(13,40,242);"/>
+        </g>
+        <g id="box1">
+            <path id="front1" serif:id="front" d="M664.779,506.052L408.779,378.052L408.779,122.052L664.779,250.052L664.779,506.052Z" style="fill:rgb(13,121,242);"/>
+            <path id="top1" serif:id="top" d="M408.779,122.052L600.779,26.052L856.779,154.052L664.779,250.052L408.779,122.052Z" style="fill:rgb(13,202,242);"/>
+            <path id="side1" serif:id="side" d="M856.779,154.052L664.779,250.052L664.779,506.052L856.779,410.052L856.779,154.052Z" style="fill:rgb(13,40,242);"/>
+        </g>
+        <g id="box3">
+            <path id="front2" serif:id="front" d="M361.299,573.948L167.221,476.909L167.221,282.831L361.299,379.87L361.299,573.948Z" style="fill:rgb(13,121,242);"/>
+            <path id="top2" serif:id="top" d="M167.221,282.831L312.78,210.052L506.858,307.091L361.299,379.87L167.221,282.831Z" style="fill:rgb(13,202,242);"/>
+            <path id="side2" serif:id="side" d="M506.858,307.091L361.299,379.87L361.299,573.948L506.858,501.169L506.858,307.091Z" style="fill:rgb(13,40,242);"/>
+        </g>
+    </g>
+</svg>

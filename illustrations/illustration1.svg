@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 1024 600" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <rect id="background" x="0" y="0" width="1024" height="600" style="fill:rgb(196,196,196);"/>
+    <g id="header">
+        <rect id="header1" serif:id="header" x="0" y="0" width="1024" height="50" style="fill:rgb(51,52,52);"/>
+        <text x="19.912px" y="35.745px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:30px;">YOUR LOGO</text>
+    </g>
+    <rect id="footer" x="0" y="480" width="1024" height="120" style="fill:rgb(23,23,23);"/>
+    <rect id="nav" x="0" y="50" width="300" height="430" style="fill:rgb(134,134,134);"/>
+    <g id="articles">
+        <rect id="article3" x="320" y="380" width="680" height="100" style="fill:rgb(134,134,134);"/>
+        <rect id="article2" x="320" y="220" width="680" height="140" style="fill:rgb(134,134,134);"/>
+        <rect id="article1" x="320" y="60" width="680" height="140" style="fill:rgb(134,134,134);"/>
+    </g>
+</svg>

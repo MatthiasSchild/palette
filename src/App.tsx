@@ -1,26 +1,160 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import './App.sass'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faGithub} from '@fortawesome/free-brands-svg-icons'
+import {faGlobe} from '@fortawesome/free-solid-svg-icons'
+import ColorViewer from './components/ColorViewer'
+import {Color} from './models/Color'
+import {Palette} from './models/Palette'
+import {Item} from './models/Item'
+import IllustrationViewer from './components/IllustrationViewer'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+interface State {
+    palette: Palette
 }
 
-export default App;
+export default class App extends React.Component<any, State> {
+    private inputNewColor: HTMLInputElement | null = null
+
+    constructor(props: any) {
+        super(props)
+        this.state = {palette: new Palette()}
+
+        // bind handlers
+        this.onButtonRandomize = this.onButtonRandomize.bind(this)
+        this.onButtonAddItem = this.onButtonAddItem.bind(this)
+        this.onButtonAddColor = this.onButtonAddColor.bind(this)
+    }
+
+    private onButtonRandomize() {
+        for (let item of this.state.palette.items) {
+            if (!item.locked) {
+                item.color.randomize()
+            }
+        }
+        this.setState({palette: this.state.palette})
+    }
+
+    private onButtonAddItem() {
+        const palette = this.state.palette
+        palette.items.push(new Item())
+        this.setState({palette})
+    }
+
+    private onButtonAddColor() {
+        const input = this.inputNewColor
+        if (input === null) return
+
+        const value = input.value
+        const expr = /^#?([0-9a-f]{6})$/i
+        const match = value.match(expr)
+
+        if (match) {
+            const item = Item.fromHex(match[1])
+            const palette = this.state.palette
+            palette.items.push(item)
+            this.setState({palette})
+
+            input.value = ''
+        } else {
+            // TODO make input red!
+        }
+    }
+
+    private onButtonLock(item: Item, locked: boolean) {
+        const palette = this.state.palette
+        for (let i of palette.items) {
+            if (i === item) {
+                i.locked = locked
+            }
+        }
+        this.setState({palette})
+    }
+
+    private onButtonComp(item: Item, comp: Color) {
+        const items: Item[] = []
+        const palette = this.state.palette
+        for (let i of palette.items) {
+            items.push(i)
+            if (i === item) {
+                const newItem = item.copy()
+                newItem.color = comp
+                items.push(newItem)
+            }
+        }
+        palette.items = items
+        this.setState({palette})
+    }
+
+    private onButtonMoveUp(item: Item) {
+    }
+
+    private onButtonMoveDown(item: Item) {
+    }
+
+    private onButtonDelete(item: Item) {
+        const items = []
+        const palette = this.state.palette
+        for (let i of palette.items) {
+            if (i !== item) {
+                items.push(i)
+            }
+        }
+        palette.items = items
+        this.setState({palette})
+    }
+
+    render() {
+        return (
+            <div className="App">
+                <div className="container">
+
+                    <div id="header">
+                        <h1>palette.schild.io</h1>
+
+                        <div className="right">
+                            <a href="https://github.com/MatthiasSchild/palette" target="_blank" rel="noreferrer">
+                                <FontAwesomeIcon icon={faGithub}/>
+                            </a>
+                            <a href="https://matthiasschild.de/" target="_blank" rel="noreferrer">
+                                <FontAwesomeIcon icon={faGlobe}/>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div id="content">
+                        <div className="item-group">
+                            <button onClick={this.onButtonRandomize}>RANDOMIZE</button>
+                            <button onClick={this.onButtonAddItem}>Add item</button>
+                            <button>Export</button>
+                        </div>
+
+
+                        <div className="item-group mt">
+                            <button onClick={this.onButtonAddColor}>Add color</button>
+                            <input type="text" className="item" ref={(c) => this.inputNewColor = c}/>
+                        </div>
+
+                        <hr/>
+
+                        {this.state.palette.items.map(item => (
+                            <ColorViewer key={item.id}
+                                         locked={item.locked}
+                                         color={item.color}
+                                         onLock={val => this.onButtonLock(item, val)}
+                                         onComp={comp => this.onButtonComp(item, comp)}
+                                         onMoveUp={() => this.onButtonMoveUp(item)}
+                                         onMoveDown={() => this.onButtonMoveDown(item)}
+                                         onDelete={() => this.onButtonDelete(item)}/>
+                        ))}
+
+                        <hr/>
+
+                        <IllustrationViewer palette={this.state.palette}/>
+                    </div>
+
+                </div>
+            </div>
+        )
+    }
+}
