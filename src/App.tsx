@@ -8,12 +8,23 @@ import {Color} from './models/Color'
 import {Palette} from './models/Palette'
 import {Item} from './models/Item'
 import IllustrationViewer from './components/IllustrationViewer'
+import {generateSass} from './generators/Sass'
 
 interface State {
     palette: Palette
 }
 
 export default class App extends React.Component<any, State> {
+    private static startDownload(filename: string, text: string) {
+        let element = document.createElement('a');
+        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+        element.setAttribute('download', filename);
+        element.style.display = 'none';
+        document.body.appendChild(element);
+        element.click();
+        document.body.removeChild(element);
+    }
+
     private inputNewColor: HTMLInputElement | null = null
 
     constructor(props: any) {
@@ -23,6 +34,8 @@ export default class App extends React.Component<any, State> {
         // bind handlers
         this.onButtonRandomize = this.onButtonRandomize.bind(this)
         this.onButtonAddItem = this.onButtonAddItem.bind(this)
+        this.onButtonExportSass = this.onButtonExportSass.bind(this)
+        this.onButtonExportScss = this.onButtonExportScss.bind(this)
         this.onButtonAddColor = this.onButtonAddColor.bind(this)
     }
 
@@ -39,6 +52,16 @@ export default class App extends React.Component<any, State> {
         const palette = this.state.palette
         palette.items.push(new Item())
         this.setState({palette})
+    }
+
+    private onButtonExportSass() {
+        const content = generateSass(this.state.palette, 'sass')
+        App.startDownload('palette.sass', content)
+    }
+
+    private onButtonExportScss() {
+        const content = generateSass(this.state.palette, 'scss')
+        App.startDownload('palette.scss', content)
     }
 
     private onButtonAddColor() {
@@ -169,12 +192,18 @@ export default class App extends React.Component<any, State> {
                     </div>
 
                     <div id="content">
-                        <div className="item-group">
-                            <button onClick={this.onButtonRandomize}>RANDOMIZE</button>
-                            <button onClick={this.onButtonAddItem}>Add item</button>
-                            <button>Export</button>
-                        </div>
+                        <div>
+                            <span className="item-group mr">
+                                <button onClick={this.onButtonRandomize}>RANDOMIZE</button>
+                                <button onClick={this.onButtonAddItem}>Add item</button>
+                            </span>
 
+                            <span className="item-group">
+                                <span className="item">Export</span>
+                                <button onClick={this.onButtonExportScss}>.scss</button>
+                                <button onClick={this.onButtonExportSass}>.sass</button>
+                            </span>
+                        </div>
 
                         <div className="item-group mt">
                             <button onClick={this.onButtonAddColor}>Add color</button>
