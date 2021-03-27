@@ -1,13 +1,18 @@
 import {Color} from './Color'
 
 export class Item {
+    private static expr = /^#?([a-z0-9]{2})([a-z0-9]{2})([a-z0-9]{2})$/i
     static nextId = 1
 
     static fromHex(hex: string): Item {
+        const match = hex.match(Item.expr)
+
         const item = new Item()
-        item.color.red = parseInt(hex.substr(0, 2), 16)
-        item.color.green = parseInt(hex.substr(2, 2), 16)
-        item.color.blue = parseInt(hex.substr(4, 2), 16)
+        if (match !== null) {
+            item.color.red = parseInt(match[1], 16)
+            item.color.green = parseInt(match[2], 16)
+            item.color.blue = parseInt(match[3], 16)
+        }
         return item
     }
 

@@ -72,3 +72,65 @@ hr
 
 .mr
   margin-right: 1rem
+
+.modal
+  position: fixed
+  top: 50%
+  left: 50%
+  transform: translate(-50%, -50%)
+  z-index: 1001
+
+  min-width: 300px
+
+  background-color: $medium
+  border: 2px solid $light
+  border-radius: 1rem
+
+  > header
+    padding: 1rem
+    font-size: 2rem
+    background-color: $darker
+    border-radius: 1rem 1rem 0 0
+
+  > div
+    padding: 1rem
+
+    label
+      display: block
+      width: 100%
+      margin: 1rem 0
+
+    input
+      width: 100%
+      margin: 1rem 0
+
+    .pack
+      padding: 1rem
+      transition: background-color 300ms
+
+    .pack:hover
+      cursor: pointer
+      background-color: $dark
+
+    .color-preview
+      display: flex
+
+      .color
+        height: 30px
+        flex-grow: 1
+        flex-basis: 0
+
+
+  > footer
+    padding: 1rem
+    background-color: $dark
+    border-radius: 0 0 1rem 1rem
+
+.modal-backdrop
+  position: fixed
+  top: 0
+  bottom: 0
+  left: 0
+  right: 0
+  background-color: rgba(0, 0, 0, 0.5)
+  z-index: 1000

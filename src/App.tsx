@@ -9,27 +9,35 @@ import {Palette} from './models/Palette'
 import {Item} from './models/Item'
 import IllustrationViewer from './components/IllustrationViewer'
 import {generateSass} from './generators/Sass'
+import SaveModal from './modals/SaveModal'
+import LoadModal from './modals/LoadModal'
 
 interface State {
     palette: Palette
+    showSaveModal: boolean
+    showLoadModal: boolean
 }
 
 export default class App extends React.Component<any, State> {
     private static startDownload(filename: string, text: string) {
-        let element = document.createElement('a');
-        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
-        element.setAttribute('download', filename);
-        element.style.display = 'none';
-        document.body.appendChild(element);
-        element.click();
-        document.body.removeChild(element);
+        let element = document.createElement('a')
+        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text))
+        element.setAttribute('download', filename)
+        element.style.display = 'none'
+        document.body.appendChild(element)
+        element.click()
+        document.body.removeChild(element)
     }
 
     private inputNewColor: HTMLInputElement | null = null
 
     constructor(props: any) {
         super(props)
-        this.state = {palette: new Palette()}
+        this.state = {
+            palette: new Palette(),
+            showSaveModal: false,
+            showLoadModal: false,
+        }
 
         // bind handlers
         this.onButtonRandomize = this.onButtonRandomize.bind(this)
@@ -173,9 +181,15 @@ export default class App extends React.Component<any, State> {
         this.setState({palette})
     }
 
+    private onLoadItems(items: Item[]) {
+        const palette = this.state.palette
+        palette.items = items
+        this.setState({palette})
+    }
+
     render() {
         return (
-            <div className="App">
+            <div className={(this.state.showSaveModal) ? 'app modal-active' : 'app'}>
                 <div className="container">
 
                     <div id="header">
@@ -196,6 +210,16 @@ export default class App extends React.Component<any, State> {
                             <span className="item-group mr">
                                 <button onClick={this.onButtonRandomize}>RANDOMIZE</button>
                                 <button onClick={this.onButtonAddItem}>Add item</button>
+                                <button onClick={() => this.setState({showSaveModal: true})}>Save</button>
+                                <button onClick={() => this.setState({showLoadModal: true})}>Load</button>
+
+                                <SaveModal active={this.state.showSaveModal}
+                                           palette={this.state.palette}
+                                           onClose={() => this.setState({showSaveModal: false})}/>
+
+                                <LoadModal active={this.state.showLoadModal}
+                                           onLoad={items => this.onLoadItems(items)}
+                                           onClose={() => this.setState({showLoadModal: false})}/>
                             </span>
 
                             <span className="item-group">
